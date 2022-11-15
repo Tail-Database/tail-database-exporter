@@ -6,6 +6,7 @@ with open("README.md", "rt") as fh:
     long_description = fh.read()
 
 dependencies = [
+    "jsonpickle==2.2.0",
     "requests==2.28.1",
 ]
 
