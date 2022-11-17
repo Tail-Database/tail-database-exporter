@@ -1,13 +1,14 @@
 import jsonpickle
 from typing import Dict, List
 from config import Config
-from tail import Tail
+from tail import Tail, TailDetails
 from tail_database import TailDatabase
 
 if Config.output_directory is None:
     raise Exception("TAILDB_EXPORTER_OUTPUT_DIR must be set")
 
 search_index: Dict[str, List[str]] = {}
+hashes: Dict[str, TailDetails] = {}
 tails: List[Tail] = []
 
 tail_database = TailDatabase()
@@ -29,7 +30,7 @@ for tail in tail_database.tails():
     )
 
     tails.append(tail)
-    search_index[tail.hash] = [tail.hash]
+    hashes[tail.hash] = TailDetails(tail.name, tail.code, tail.nft_uri)
     search_index[tail.code.lower()] = [tail.hash]
 
     for word in tail.name.split(" "):
@@ -44,7 +45,11 @@ for tail in tail_database.tails():
     with open(Config.output_directory + f"/{tail.hash}.json", 'w+') as f:
         f.write(tail_json)
 
-search_index_json = jsonpickle.encode(search_index, unpicklable=False)
+
+search_index_json = jsonpickle.encode({
+    "search_index": search_index,
+    "hashes": hashes
+}, unpicklable=False)
 tails_json = jsonpickle.encode(tails, unpicklable=False)
 
 with open(Config.output_directory + f"/search_index.json", 'w+') as f:

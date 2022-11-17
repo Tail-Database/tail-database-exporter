@@ -30,3 +30,18 @@ class Tail:
         self.eve_coin_id = eve_coin_id
         self.tail_reveal = tail_reveal
         self.nft_uri = nft_uri
+
+class TailDetails:
+    name: str
+    code: str
+    nft_uri: str
+
+    def __init__(
+        self,
+        name: str,
+        code: str,
+        nft_uri: str,
+    ):
+        self.name = name
+        self.code = code
+        self.nft_uri = nft_uri
