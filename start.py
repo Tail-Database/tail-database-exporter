@@ -7,7 +7,7 @@ from tail_database import TailDatabase
 if Config.output_directory is None:
     raise Exception("TAILDB_EXPORTER_OUTPUT_DIR must be set")
 
-search_index: Dict[str, str] = {}
+search_index: Dict[str, List[str]] = {}
 tails: List[Tail] = []
 
 tail_database = TailDatabase()
@@ -29,9 +29,15 @@ for tail in tail_database.tails():
     )
 
     tails.append(tail)
-    search_index[tail.hash] = tail.hash
-    search_index[tail.code] = tail.hash
-    search_index[tail.name] = tail.hash
+    search_index[tail.hash] = [tail.hash]
+    search_index[tail.code.lower()] = [tail.hash]
+
+    for word in tail.name.split(" "):
+        word = word.lower()
+        if search_index.get(word) is None:
+            search_index[word] = [tail.hash]
+        else:
+            search_index[word].append(tail.hash)
 
     tail_json = jsonpickle.encode(tail, unpicklable=False)
 
