@@ -17,6 +17,10 @@ for tail in tail_database.tails():
     tail_reveal = tail_database.tail_reveal(tail["eveCoinId"])
     nft_uri = tail_database.nft_uri(tail["launcherId"])
 
+    website_url = tail.get("website_url")
+    twitter_url = tail.get("twitter_url")
+    discord_url = tail.get("discord_url")
+
     tail = Tail(
         tail["hash"],
         tail["name"],
@@ -26,7 +30,10 @@ for tail in tail_database.tails():
         tail["launcherId"],
         tail["eveCoinId"],
         tail_reveal,
-        nft_uri
+        nft_uri,
+        website_url,
+        twitter_url,
+        discord_url,
     )
 
     tails.append(tail)

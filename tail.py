@@ -8,6 +8,9 @@ class Tail:
     eve_coin_id: str
     tail_reveal: str
     nft_uri: str
+    website_url: str
+    twitter_url: str
+    discord_url: str
 
     def __init__(
         self,
@@ -19,7 +22,10 @@ class Tail:
         launcher_id: str,
         eve_coin_id: str,
         tail_reveal: str,
-        nft_uri: str
+        nft_uri: str,
+        website_url: str,
+        twitter_url: str,
+        discord_url: str,
     ):
         self.hash = hash
         self.name = name
@@ -30,6 +36,9 @@ class Tail:
         self.eve_coin_id = eve_coin_id
         self.tail_reveal = tail_reveal
         self.nft_uri = nft_uri
+        self.website_url = website_url
+        self.twitter_url = twitter_url
+        self.discord_url = discord_url
 
 class TailDetails:
     name: str
